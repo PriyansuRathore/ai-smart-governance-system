@@ -47,11 +47,13 @@ class TextRequest(BaseModel):
 
 @router.post("/predict-text")
 def predict_text(data: TextRequest):
-    model, vectorizer = load_artifacts()
+    model, _ = load_artifacts()
     cleaned  = clean_text(data.text)
-    vec      = vectorizer.transform([cleaned])
-    category = model.predict(vec)[0]
+    category = model.predict([cleaned])[0]
+    proba    = model.predict_proba([cleaned])[0]
+    confidence = round(float(max(proba)) * 100, 1)
     return {
         "category":   category,
         "department": DEPARTMENT_MAP.get(category, DEPARTMENT_MAP["other"]),
+        "confidence": confidence,
     }

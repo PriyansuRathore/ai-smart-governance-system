@@ -1,26 +1,38 @@
 const categories = {
   road: {
-    keywords: ['road', 'pothole', 'street', 'pavement', 'traffic', 'highway', 'bridge', 'footpath', 'sidewalk', 'divider', 'tar', 'asphalt', 'crack', 'bump', 'jam', 'congestion', 'signal', 'zebra crossing', 'speed breaker', 'traffic jam', 'traffic signal'],
+    keywords: ['road', 'pothole', 'street', 'pavement', 'traffic', 'highway', 'bridge', 'footpath', 'sidewalk', 'divider', 'tar', 'asphalt', 'crack', 'bump', 'jam', 'congestion', 'signal', 'zebra crossing', 'speed breaker', 'traffic jam', 'traffic signal',
+      // Hindi/Hinglish
+      'sadak', 'sarak', 'rasta', 'gaddha', 'gadha', 'pul', 'toot gaya', 'tuta'],
     department: 'Public Works Department',
   },
   water: {
-    keywords: ['water', 'pipe', 'leak', 'drainage', 'flood', 'sewage', 'tap', 'supply', 'plumbing', 'drain', 'manhole', 'sewer', 'waterlog', 'pipeline'],
+    keywords: ['water', 'pipe', 'leak', 'drainage', 'flood', 'sewage', 'tap', 'supply', 'plumbing', 'drain', 'manhole', 'sewer', 'waterlog', 'pipeline',
+      // Hindi/Hinglish
+      'nali', 'naali', 'paani', 'pani', 'tapka', 'beh raha', 'jal bhar', 'nikasi'],
     department: 'Water Supply Department',
   },
   electricity: {
-    keywords: ['electricity', 'power', 'light', 'electric', 'outage', 'wire', 'transformer', 'voltage', 'streetlight', 'cable', 'pole', 'sparking', 'current'],
+    keywords: ['electricity', 'power', 'light', 'electric', 'outage', 'wire', 'transformer', 'voltage', 'streetlight', 'cable', 'pole', 'sparking', 'current',
+      // Hindi/Hinglish
+      'bijli', 'current nahi', 'light nahi', 'bijli nahi', 'khamba', 'bijli gul'],
     department: 'Electricity Department',
   },
   garbage: {
-    keywords: ['garbage', 'waste', 'trash', 'litter', 'dump', 'sanitation', 'rubbish', 'bin', 'smell', 'dustbin', 'debris', 'compost'],
+    keywords: ['garbage', 'waste', 'trash', 'litter', 'dump', 'sanitation', 'rubbish', 'bin', 'smell', 'dustbin', 'debris', 'compost',
+      // Hindi/Hinglish
+      'kachra', 'kooda', 'kuda', 'safai', 'gandagi', 'gandha', 'bhari'],
     department: 'Sanitation Department',
   },
   emergency: {
-    keywords: ['accident', 'injured', 'bleeding', 'hurt', 'victim', 'crash', 'wounded', 'blood', 'ambulance', 'unconscious', 'collapsed person', 'person hit'],
+    keywords: ['accident', 'injured', 'bleeding', 'hurt', 'victim', 'crash', 'wounded', 'blood', 'ambulance', 'unconscious', 'collapsed person', 'person hit',
+      // Hindi/Hinglish
+      'chot', 'khoon', 'bachao', 'madad', 'behosh', 'accident hua'],
     department: 'Emergency & Medical Services',
   },
   fire: {
-    keywords: ['fire', 'burning', 'flame', 'smoke', 'blaze', 'explosion', 'burnt', 'on fire'],
+    keywords: ['fire', 'burning', 'flame', 'smoke', 'blaze', 'explosion', 'burnt', 'on fire',
+      // Hindi/Hinglish
+      'aag', 'jal raha', 'dhuan', 'dhuaan', 'blast'],
     department: 'Fire Department',
   },
   building: {
@@ -28,11 +40,15 @@ const categories = {
     department: 'Civil Engineering Department',
   },
   tree: {
-    keywords: ['tree', 'branch', 'fallen tree', 'overgrown', 'uprooted', 'tree fell'],
+    keywords: ['tree', 'branch', 'fallen tree', 'overgrown', 'uprooted', 'tree fell',
+      // Hindi/Hinglish
+      'ped', 'daali', 'gira', 'ukhad'],
     department: 'Parks & Horticulture Department',
   },
   animal: {
-    keywords: ['dog', 'stray', 'animal', 'bite', 'cattle', 'cow', 'monkey', 'snake', 'carcass', 'stray dog', 'dog attack'],
+    keywords: ['dog', 'stray', 'animal', 'bite', 'cattle', 'cow', 'monkey', 'snake', 'carcass', 'stray dog', 'dog attack',
+      // Hindi/Hinglish
+      'kutta', 'kutte', 'awara', 'saanp', 'bandar', 'gadha'],
     department: 'Animal Control Department',
   },
   public_property: {
@@ -40,7 +56,9 @@ const categories = {
     department: 'Municipal Corporation',
   },
   pollution: {
-    keywords: ['pollution', 'smoke', 'chemical', 'toxic', 'noise', 'factory', 'air quality', 'fumes', 'polluted', 'contamination'],
+    keywords: ['pollution', 'smoke', 'chemical', 'toxic', 'noise', 'factory', 'air quality', 'fumes', 'polluted', 'contamination',
+      // Hindi/Hinglish
+      'pradushan', 'dhuaan', 'shor', 'badbu', 'bdboo'],
     department: 'Environment Department',
   },
 };

@@ -214,6 +214,26 @@ export default function TicketPage() {
             {complaint.location && <div className="ticket-detail-row"><span>Location</span><strong>{complaint.location}</strong></div>}
           </div>
 
+          {/* Report similar issue */}
+          <div className="ticket-sidebar__section">
+            <h4>Same issue near you?</h4>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '0.85rem', lineHeight: 1.5 }}>
+              Facing the same problem in your area? Report it — it goes directly to the {complaint.department}.
+            </p>
+            <button
+              className="btn-primary"
+              style={{ width: '100%', justifyContent: 'center', fontSize: '0.88rem', padding: '0.65rem 1rem' }}
+              onClick={() => navigate('/submit', {
+                state: {
+                  description: `Similar issue: ${complaint.description}`,
+                  location: complaint.location || '',
+                }
+              })}
+            >
+              📝 Report This in My Area
+            </button>
+          </div>
+
           {/* Upvote */}
           <div className="ticket-sidebar__section">
             <h4>Community Support</h4>

@@ -22,13 +22,9 @@ road shoulder eroded near highway,road
 flyover crack spotted near junction,road
 road marking completely faded,road
 road blocked due to fallen debris,road
-road subsidence near drainage area,road
 tar peeling off road surface,road
 road near school is very dangerous,road
 road collapse after heavy rain,road
-road full of mud after construction,road
-road near river is eroding,road
-road repair work left incomplete,road
 traffic jam on main road,road
 heavy traffic congestion near school,road
 traffic signal not working at junction,road
@@ -41,8 +37,19 @@ zebra crossing faded near school,road
 speed breaker missing on highway,road
 traffic light broken at intersection,road
 road congestion causing long delays,road
-traffic backed up due to pothole,road
-no traffic management at busy junction,road
+sadak mein gaddha hai,road
+sadak toot gayi hai,road
+raste mein bada gaddha hai,road
+sadak ki halat bahut kharab hai,road
+sarak pe bahut traffic jam hai,road
+signal kaam nahi kar raha,road
+footpath toot gaya hai,road
+pul ke paas sadak kharab hai,road
+road pe bahut bade bade gadhhe hain,road
+there is a massive hole on the road,road
+rd is very bad condition,road
+pothole on rd near my house,road
+strt is broken need repair,road
 garbage bin overflowing in market,garbage
 trash dumped near apartment gate,garbage
 unclean street with waste piles,garbage
@@ -62,11 +69,23 @@ toxic waste dumped near playground,garbage
 construction debris blocking footpath,garbage
 plastic waste clogging drain,garbage
 garbage burning causing air pollution,garbage
-waste water flowing on street,garbage
 illegal dumping near water body,garbage
 garbage smell unbearable in area,garbage
 rats seen near garbage dump,garbage
 flies breeding in open garbage,garbage
+kachra pada hai sadak pe,garbage
+kachra nahi utha aaj,garbage
+dustbin bhari hui hai,garbage
+safai nahi hui kai dino se,garbage
+gandagi bahut zyada ho gayi hai,garbage
+kooda dher laga hua hai,garbage
+kachra gaadi nahi aayi,garbage
+safai wale nahi aaye,garbage
+bahut gandagi hai yahan,garbage
+garbge not collected since days,garbage
+garb lying on street,garbage
+dustbin is full and overflowing,garbage
+waste not picked up for week,garbage
 water pipe leaking near temple,water
 drinking water supply is dirty,water
 sewage water overflowing on road,water
@@ -92,6 +111,23 @@ water supply cut without notice,water
 pipeline leaking under road,water
 flood water not draining from street,water
 water stagnation near school,water
+nali toot gayi hai,water
+paani nahi aa raha,water
+pani band ho gaya hai,water
+nali jam ho gayi hai,water
+paani ganda aa raha hai,water
+nali se bdboo aa rahi hai,water
+tapka lag raha hai pipe mein,water
+paani ka pressure bahut kam hai,water
+sewage beh raha hai sadak pe,water
+barsat ka paani nahi nikal raha,water
+jal bhar gaya ghar ke aage,water
+nali ruka hua hai,water
+pipe toot gayi paani beh raha,water
+no water supply since morning,water
+wateer not coming in taps,water
+watr supply stopped,water
+drain is blocked need cleaning,water
 street light flickering at night,electricity
 electric pole wire is hanging,electricity
 transformer not working in locality,electricity
@@ -115,6 +151,23 @@ underground cable exposed on road,electricity
 electric shock from street light pole,electricity
 power supply unstable since morning,electricity
 high tension wire hanging low,electricity
+bijli nahi hai,electricity
+bijli chali gayi,electricity
+light nahi aa rahi,electricity
+current nahi hai,electricity
+bijli gul ho gayi,electricity
+transformer kharab ho gaya,electricity
+khamba gir gaya,electricity
+wire latkaa hua hai,electricity
+bijli ka jhatkaa laga,electricity
+street light band hai,electricity
+bijli bahut zyada jaati hai,electricity
+voltage bahut kam hai,electricity
+no light since yesterday,electricity
+elec not working in area,electricity
+electricty gone since morning,electricity
+power cut again today,electricity
+lite not working on street,electricity
 person injured in road accident,emergency
 bleeding man lying on road,emergency
 accident victim needs ambulance,emergency
@@ -125,6 +178,12 @@ road accident near hospital gate,emergency
 person unconscious after crash,emergency
 multiple people injured in accident,emergency
 emergency help needed on main road,emergency
+accident hua hai madad chahiye,emergency
+khoon beh raha hai bachao,emergency
+accident pe ambulance bulao,emergency
+aadmi gir gaya behosh hai,emergency
+bahut buri chot lagi hai,emergency
+acc happened need help urgently,emergency
 building on fire near market,fire
 house fire spreading to neighbors,fire
 vehicle caught fire on highway,fire
@@ -133,8 +192,13 @@ transformer fire in colony,fire
 electrical fire in apartment,fire
 fire in factory causing smoke,fire
 shop fire in market area,fire
-fire spreading from kitchen to building,fire
 smoke coming from burning waste,fire
+aag lag gayi building mein,fire
+aag bujhao jaldi,fire
+ghar mein aag lag gayi,fire
+jal raha hai kuch,fire
+dhuan aa raha hai,fire
+blast hua factory mein,fire
 building wall collapsed on road,building
 unsafe construction near school,building
 cracked wall in government building,building
@@ -142,7 +206,6 @@ roof collapsed in old structure,building
 dangerous building near residential area,building
 construction debris falling on road,building
 old bridge structure cracking,building
-public building in dangerous condition,building
 school building wall cracked,building
 hospital building needs urgent repair,building
 fallen tree blocking main road,tree
@@ -153,8 +216,10 @@ tree fell on parked car,tree
 large branch hanging dangerously,tree
 tree roots damaging road surface,tree
 fallen tree blocking school entrance,tree
-tree fell on footpath injuring person,tree
-overgrown branches blocking traffic signal,tree
+ped gir gaya sadak pe,tree
+daali toot ke giri,tree
+ped ukhad gaya toofan mein,tree
+bada ped raste mein gira hua hai,tree
 stray dogs attacking people near park,animal
 dog bite incident near school,animal
 stray cattle blocking highway,animal
@@ -162,9 +227,12 @@ monkey menace in residential area,animal
 dead animal carcass on main road,animal
 snake found in residential colony,animal
 stray dog pack near children playground,animal
-injured stray animal on road,animal
-cattle straying on busy road,animal
 dog attack on morning walker,animal
+awara kutte bahut hain,animal
+kutta kaat gaya,animal
+saanp nikla ghar mein,animal
+bandar bahut pareshaan kar rahe,animal
+awara gaaye sadak pe hain,animal
 broken bench in public park,public_property
 bus stop shelter damaged,public_property
 public toilet not working in area,public_property
@@ -173,8 +241,6 @@ vandalism in public garden,public_property
 broken signboard on main road,public_property
 public urinal blocked and smelling,public_property
 park equipment broken near playground,public_property
-bus stop roof collapsed,public_property
-public drinking water tap broken,public_property
 factory smoke causing breathing problems,pollution
 chemical waste dumped near river,pollution
 noise pollution from construction at night,pollution
@@ -184,4 +250,7 @@ polluted river due to factory discharge,pollution
 chemical smell from nearby factory,pollution
 noise from factory disturbing residents,pollution
 industrial waste in public water body,pollution
-toxic waste burning near homes,pollution
+factory se dhuaan aa raha hai,pollution
+pradushan bahut zyada ho gaya,pollution
+shor bahut zyada hai factory ka,pollution
+badbu aa rahi hai factory se,pollution

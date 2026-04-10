@@ -428,6 +428,15 @@
 [data-theme="dark"] .view-ticket-btn { border-color: var(--text); color: var(--text); }
 [data-theme="dark"] .view-ticket-btn:hover { background: var(--text); color: var(--bg); }
 
+.report-similar-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.48rem 1rem; border-radius: 999px;
+  border: 1.5px solid #16a37a; background: transparent;
+  color: #16a37a; font-size: 0.84rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.report-similar-btn:hover { background: #16a37a; color: #fff; }
+
 .feed-loading { display: flex; flex-direction: column; gap: 1.25rem; }
 .feed-skeleton {
   height: 148px; border-radius: 20px;
@@ -436,6 +445,40 @@
 }
 
 .btn-link { background: none; border: none; padding: 0; color: #3b82f6; cursor: pointer; font-size: inherit; text-decoration: underline; }
+
+/* Locked field (auto-filled from account) */
+.locked-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  background: #f0f9ff;
+  border: 1.5px solid #bae6fd;
+  color: #0369a1;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+[data-theme="dark"] .locked-field {
+  background: rgba(59,130,246,0.08);
+  border-color: rgba(59,130,246,0.25);
+  color: #93c5fd;
+}
+.locked-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .locked-badge {
+  background: rgba(59,130,246,0.2);
+  color: #7dd3fc;
+}
 
 /* ══════════════════════════════════════════════
    TICKET PAGE

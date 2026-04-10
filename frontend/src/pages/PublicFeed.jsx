@@ -14,7 +14,7 @@ const STATUS_LABELS  = { pending: 'Pending', in_progress: 'In Progress', resolve
 const PRIORITY_COLORS = { high: '#dc2626', medium: '#d97706', low: '#16a37a' };
 const CATEGORIES = ['road','water','electricity','garbage','emergency','fire','building','tree','animal','public_property','pollution'];
 
-function ComplaintCard({ complaint, voterEmail, onUpvote, onOpen }) {
+function ComplaintCard({ complaint, voterEmail, onUpvote, onOpen, onReport }) {
   const hasVoted = complaint.upvotedBy?.includes(voterEmail);
 
   return (
@@ -57,6 +57,13 @@ function ComplaintCard({ complaint, voterEmail, onUpvote, onOpen }) {
           title={hasVoted ? 'Already upvoted' : 'Same issue in my area'}
         >
           👍 {complaint.upvotes || 0} {complaint.upvotes === 1 ? 'upvote' : 'upvotes'}
+        </button>
+        <button
+          className="report-similar-btn"
+          onClick={() => onReport(complaint)}
+          title="Report this issue in your area"
+        >
+          📝 Report in my area
         </button>
         <button className="view-ticket-btn" onClick={() => onOpen(complaint.id)}>
           🎫 View Ticket
@@ -178,6 +185,7 @@ export default function PublicFeed() {
             voterEmail={email}
             onUpvote={handleUpvote}
             onOpen={(id) => navigate(`/ticket/${id}`)}
+            onReport={(c) => navigate('/submit', { state: { description: `Similar issue: ${c.description}`, location: c.location || '' } })}
           />
         ))
       )}

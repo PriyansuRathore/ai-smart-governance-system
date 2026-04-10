@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { submitComplaint } from '../api';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../auth.jsx';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -29,7 +31,18 @@ function previewCategory(text) {
 }
 
 export default function SubmitComplaint() {
-  const [form, setForm] = useState({ citizenName: '', email: '', description: '', location: '' });
+  const location = useLocation();
+  const prefill  = location.state || {};
+  const { user } = useAuth();
+
+  const [form, setForm] = useState({
+    citizenName: user?.name  || '',
+    email:       user?.email || '',
+    description: prefill.description || '',
+    location:    prefill.location    || '',
+  });
+
+  const isPrefilled = !!prefill.description;
   const [imageUrl, setImageUrl]   = useState('');
   const [imagePrediction, setImagePrediction] = useState(null);
   const [imageAnalyzing, setImageAnalyzing]   = useState(false);
@@ -144,17 +157,55 @@ export default function SubmitComplaint() {
         <p className="field-note" style={{ marginBottom: '1.25rem' }}>
           Fill in your details and describe the issue. AI will classify and route it automatically.
         </p>
+
+        {isPrefilled && (
+          <div style={{
+            background: '#eff6ff', border: '1.5px solid #bfdbfe', borderRadius: 14,
+            padding: '0.85rem 1.1rem', marginBottom: '1.25rem',
+            display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap',
+          }}>
+            <span style={{ fontSize: '1.1rem' }}>📋</span>
+            <div style={{ flex: 1 }}>
+              <strong style={{ fontSize: '0.88rem', color: '#1e40af' }}>Reporting a similar issue</strong>
+              <p style={{ margin: 0, fontSize: '0.82rem', color: '#3b82f6' }}>
+                Pre-filled from an existing complaint — update the description with your specific location and details.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn-link"
+              style={{ fontSize: '0.8rem', color: '#6b7280' }}
+              onClick={() => setForm({ citizenName: form.citizenName, email: form.email, description: '', location: '' })}
+            >
+              Clear
+            </button>
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="field-group">
               <label className="field-label" htmlFor="name">Your Name</label>
-              <input id="name" placeholder="e.g. Rahul Sharma" value={form.citizenName}
-                onChange={(e) => setForm({ ...form, citizenName: e.target.value })} required />
+              {user ? (
+                <div className="locked-field">
+                  <span>👤 {user.name}</span>
+                  <span className="locked-badge">from your account</span>
+                </div>
+              ) : (
+                <input id="name" placeholder="e.g. Rahul Sharma" value={form.citizenName}
+                  onChange={(e) => setForm({ ...form, citizenName: e.target.value })} required />
+              )}
             </div>
             <div className="field-group">
               <label className="field-label" htmlFor="email">Email Address</label>
-              <input id="email" type="email" placeholder="e.g. rahul@email.com" value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+              {user ? (
+                <div className="locked-field">
+                  <span>✉️ {user.email}</span>
+                  <span className="locked-badge">from your account</span>
+                </div>
+              ) : (
+                <input id="email" type="email" placeholder="e.g. rahul@email.com" value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+              )}
             </div>
           </div>
 
