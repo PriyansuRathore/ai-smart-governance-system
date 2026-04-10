@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.production
+
+# Build output
+dist/
+build/
+out/
+
+# Logs
+*.log
+npm-debug.log*
+
+# ML model files (large binaries)
+ai-service/saved_models/*.pkl
+ai-service/saved_models/*.pth
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Test files
+backend/test-ws.js
+ai-service/test_hf.py

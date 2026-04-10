@@ -1,0 +1,123 @@
+text,category,priority
+large pothole causing bike accidents near school,road,high
+road collapsed near bridge injuring pedestrians,road,high
+accident due to high speed on damaged highway,road,high
+person fell due to broken pavement and is bleeding,road,high
+fatal accident at unmarked pothole on main road,road,high
+road cave in swallowing vehicle near market,road,high
+road damaged after rain causing traffic jam,road,medium
+pothole on main street needs repair,road,medium
+broken footpath near market area,road,medium
+road repair needed in residential colony,road,medium
+divider broken on highway,road,medium
+road shoulder eroded causing accidents,road,medium
+minor crack on road surface,road,low
+footpath slightly uneven near park,road,low
+road marking faded on side lane,road,low
+small bump on road near temple,road,low
+road needs repainting near school,road,low
+sewage overflow entering homes causing health risk,water,high
+pipeline burst flooding entire street urgently,water,high
+contaminated drinking water causing illness in area,water,high
+drain overflow near hospital blocking emergency access,water,high
+flood water entering houses need immediate help,water,high
+sewage mixing with drinking water supply,water,high
+water pipe leaking near main road,water,medium
+tap water supply not coming since morning,water,medium
+drain blocked causing waterlogging in colony,water,medium
+low water pressure in apartment building,water,medium
+sewer line blocked needs cleaning,water,medium
+water supply delayed by one hour today,water,low
+minor dripping tap in public area,water,low
+small puddle near drain outlet,water,low
+water meter reading seems incorrect,water,low
+electric wire fallen on road electrocuting passerby,electricity,high
+transformer exploded near school causing fire,electricity,high
+live wire sparking near children playground urgent,electricity,high
+power outage in hospital affecting critical patients,electricity,high
+electric pole collapsed on car injuring driver,electricity,high
+high tension wire fallen on road,electricity,high
+streetlight not working on main road at night,electricity,medium
+frequent power cuts in residential area,electricity,medium
+voltage fluctuation damaging home appliances,electricity,medium
+transformer not working in locality since yesterday,electricity,medium
+electric box broken on roadside,electricity,medium
+streetlight flickering occasionally at night,electricity,low
+power went off for one hour this morning,electricity,low
+electric meter reading needs checking,electricity,low
+garbage dump near hospital attracting rats and disease,garbage,high
+toxic waste illegally dumped near water source,garbage,high
+dead animals rotting on road causing health hazard,garbage,high
+garbage pile blocking emergency vehicle access,garbage,high
+open waste dump causing severe disease outbreak risk,garbage,high
+garbage bin overflowing in market area,garbage,medium
+waste collection vehicle not coming for three days,garbage,medium
+litter scattered near school entrance,garbage,medium
+municipal waste not cleared in colony,garbage,medium
+dustbin not emptied today in park,garbage,low
+minor litter near bus stop,garbage,low
+garbage collected late by one day,garbage,low
+person injured and bleeding after road accident,emergency,high
+accident victim unconscious on highway,emergency,high
+multiple people injured in vehicle crash,emergency,high
+person collapsed on street needs immediate help,emergency,high
+man hit by speeding vehicle near school,emergency,high
+woman fell from bike bleeding on road,emergency,high
+minor accident no serious injuries,emergency,medium
+person fell from bike minor bruise,emergency,medium
+small accident vehicle damage only,emergency,low
+building on fire spreading to nearby homes,fire,high
+factory fire causing toxic smoke in area,fire,high
+transformer fire in residential colony,fire,high
+vehicle on fire on busy highway,fire,high
+garbage dump fire near school,fire,high
+small fire in shop contained quickly,fire,medium
+vehicle engine smoke on road,fire,medium
+minor fire in kitchen extinguished,fire,low
+smoke from burning leaves in park,fire,low
+building wall collapsed injuring people on road,building,high
+unsafe construction falling debris on pedestrians,building,high
+old building collapse risk near school,building,high
+cracked wall in hospital building urgent,building,high
+school building roof cracked dangerously,building,medium
+government building wall cracked needs repair,building,medium
+construction debris blocking road,building,medium
+minor crack in public building wall,building,low
+old paint peeling from public building,building,low
+fallen tree blocking main road completely,tree,high
+tree fell on electric wire causing outage,tree,high
+uprooted tree after storm blocking highway,tree,high
+tree fell on person causing injury,tree,high
+large branch hanging over road dangerously,tree,medium
+fallen tree blocking school entrance,tree,medium
+overgrown tree blocking traffic signal,tree,medium
+tree roots cracking road surface,tree,low
+overgrown branches blocking streetlight,tree,low
+stray dogs attacking people near park,animal,high
+dog bite incident child injured near school,animal,high
+stray cattle causing accident on highway,animal,high
+snake found in residential home,animal,high
+monkey attack on residents in colony,animal,high
+stray dog pack near children playground,animal,medium
+dead animal carcass on main road,animal,medium
+injured stray animal on road,animal,medium
+stray dogs barking at night,animal,low
+cattle straying on side road,animal,low
+bus stop roof collapsed injuring people,public_property,high
+broken park equipment injuring child,public_property,high
+public toilet sewage overflow causing health risk,public_property,high
+broken signboard fell on pedestrian,public_property,medium
+bus stop shelter damaged needs repair,public_property,medium
+graffiti on public wall near school,public_property,low
+broken bench in public park,public_property,low
+public drinking water tap broken,public_property,low
+factory smoke causing severe breathing problems,pollution,high
+chemical waste dumped near river poisoning water,pollution,high
+toxic fumes from factory affecting residents,pollution,high
+industrial waste in public water body,pollution,high
+noise pollution from construction at night,pollution,medium
+polluted river due to factory discharge,pollution,medium
+chemical smell from nearby factory,pollution,medium
+air quality poor in locality,pollution,medium
+noise from factory disturbing residents,pollution,low
+minor dust from construction site,pollution,low

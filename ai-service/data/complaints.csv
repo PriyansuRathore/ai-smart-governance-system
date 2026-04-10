@@ -1,0 +1,187 @@
+text,category
+road broken near house,road
+potholes on highway,road
+large pothole near bus stand,road
+damaged road causing traffic jam,road
+road cracked after heavy rain,road
+bridge approach road is unsafe,road
+bike accident due to pothole,road
+main street full of potholes,road
+broken pavement near school,road
+road repair needed in colony,road
+waterlogging on road after rain,road
+divider broken on highway road,road
+footpath damaged near hospital,road
+road surface peeled off badly,road
+deep pothole in residential street,road
+uneven road near railway crossing,road
+road cave in near apartment,road
+speed breaker broken on main road,road
+road barrier missing near construction,road
+road shoulder eroded near highway,road
+flyover crack spotted near junction,road
+road marking completely faded,road
+road blocked due to fallen debris,road
+road subsidence near drainage area,road
+tar peeling off road surface,road
+road near school is very dangerous,road
+road collapse after heavy rain,road
+road full of mud after construction,road
+road near river is eroding,road
+road repair work left incomplete,road
+traffic jam on main road,road
+heavy traffic congestion near school,road
+traffic signal not working at junction,road
+no traffic signal at busy crossing,road
+traffic blocked due to road construction,road
+vehicles stuck in traffic for hours,road
+traffic chaos near railway station,road
+traffic jam due to broken road,road
+zebra crossing faded near school,road
+speed breaker missing on highway,road
+traffic light broken at intersection,road
+road congestion causing long delays,road
+traffic backed up due to pothole,road
+no traffic management at busy junction,road
+garbage bin overflowing in market,garbage
+trash dumped near apartment gate,garbage
+unclean street with waste piles,garbage
+municipal waste not cleared,garbage
+bad smell from garbage heap,garbage
+garbage scattered near bus stop,garbage
+dustbin not emptied for days,garbage
+waste collection vehicle not coming,garbage
+trash lying near school entrance,garbage
+dump yard overflowing in locality,garbage
+litter all around public park,garbage
+dead animals not removed from road,garbage
+sanitation workers skipped our lane,garbage
+garbage pile attracting stray dogs,garbage
+open waste causing mosquito breeding,garbage
+toxic waste dumped near playground,garbage
+construction debris blocking footpath,garbage
+plastic waste clogging drain,garbage
+garbage burning causing air pollution,garbage
+waste water flowing on street,garbage
+illegal dumping near water body,garbage
+garbage smell unbearable in area,garbage
+rats seen near garbage dump,garbage
+flies breeding in open garbage,garbage
+water pipe leaking near temple,water
+drinking water supply is dirty,water
+sewage water overflowing on road,water
+tap water not coming in area,water
+pipeline burst near market,water
+drain blockage causing overflow,water
+water tank supply delayed again,water
+manhole overflowing during morning,water
+low water pressure in apartment,water
+sewer line blocked in colony,water
+water logging in front of house,water
+drain water entering homes,water
+broken water line near hospital,water
+sewage smell due to overflow,water
+continuous water leakage on street,water
+polluted water coming from tap,water
+water supply contaminated with mud,water
+borewell water turned yellow,water
+overhead tank leaking on terrace,water
+drain cover missing causing flooding,water
+sewage mixing with drinking water,water
+water supply cut without notice,water
+pipeline leaking under road,water
+flood water not draining from street,water
+water stagnation near school,water
+street light flickering at night,electricity
+electric pole wire is hanging,electricity
+transformer not working in locality,electricity
+power outage since last night,electricity
+voltage fluctuation damaging appliances,electricity
+street lights off on main road,electricity
+electric wire snapped near house,electricity
+power cut in market area,electricity
+transformer sparking near school,electricity
+electricity issue in entire colony,electricity
+no current supply in our lane,electricity
+short circuit smell from pole,electricity
+streetlight not working near park,electricity
+frequent power failure in area,electricity
+broken electric box on roadside,electricity
+live wire touching water puddle,electricity
+electric pole leaning dangerously,electricity
+power line sagging over road,electricity
+meter box damaged by rain,electricity
+underground cable exposed on road,electricity
+electric shock from street light pole,electricity
+power supply unstable since morning,electricity
+high tension wire hanging low,electricity
+person injured in road accident,emergency
+bleeding man lying on road,emergency
+accident victim needs ambulance,emergency
+person collapsed on street,emergency
+man hit by vehicle on highway,emergency
+woman fell from bike near school,emergency
+road accident near hospital gate,emergency
+person unconscious after crash,emergency
+multiple people injured in accident,emergency
+emergency help needed on main road,emergency
+building on fire near market,fire
+house fire spreading to neighbors,fire
+vehicle caught fire on highway,fire
+garbage dump burning near homes,fire
+transformer fire in colony,fire
+electrical fire in apartment,fire
+fire in factory causing smoke,fire
+shop fire in market area,fire
+fire spreading from kitchen to building,fire
+smoke coming from burning waste,fire
+building wall collapsed on road,building
+unsafe construction near school,building
+cracked wall in government building,building
+roof collapsed in old structure,building
+dangerous building near residential area,building
+construction debris falling on road,building
+old bridge structure cracking,building
+public building in dangerous condition,building
+school building wall cracked,building
+hospital building needs urgent repair,building
+fallen tree blocking main road,tree
+tree branch fell on electric wire,tree
+uprooted tree after storm,tree
+overgrown tree blocking streetlight,tree
+tree fell on parked car,tree
+large branch hanging dangerously,tree
+tree roots damaging road surface,tree
+fallen tree blocking school entrance,tree
+tree fell on footpath injuring person,tree
+overgrown branches blocking traffic signal,tree
+stray dogs attacking people near park,animal
+dog bite incident near school,animal
+stray cattle blocking highway,animal
+monkey menace in residential area,animal
+dead animal carcass on main road,animal
+snake found in residential colony,animal
+stray dog pack near children playground,animal
+injured stray animal on road,animal
+cattle straying on busy road,animal
+dog attack on morning walker,animal
+broken bench in public park,public_property
+bus stop shelter damaged,public_property
+public toilet not working in area,public_property
+graffiti on public wall near school,public_property
+vandalism in public garden,public_property
+broken signboard on main road,public_property
+public urinal blocked and smelling,public_property
+park equipment broken near playground,public_property
+bus stop roof collapsed,public_property
+public drinking water tap broken,public_property
+factory smoke causing breathing problems,pollution
+chemical waste dumped near river,pollution
+noise pollution from construction at night,pollution
+toxic fumes from industrial area,pollution
+air quality very poor in locality,pollution
+polluted river due to factory discharge,pollution
+chemical smell from nearby factory,pollution
+noise from factory disturbing residents,pollution
+industrial waste in public water body,pollution
+toxic waste burning near homes,pollution
