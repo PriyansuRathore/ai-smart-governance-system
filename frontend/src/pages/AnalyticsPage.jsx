@@ -31,7 +31,12 @@ export default function AnalyticsPage() {
   useEffect(() => {
     getAnalytics()
       .then(({ data }) => setData(data))
-      .catch(() => toast.error('Failed to load analytics'))
+      .catch((err) => {
+        const msg = err.response?.status === 401 ? 'Please log in as admin'
+                  : err.response?.status === 403 ? 'Admin access required'
+                  : 'Failed to load analytics';
+        toast.error(msg);
+      })
       .finally(() => setLoading(false));
   }, []);
 

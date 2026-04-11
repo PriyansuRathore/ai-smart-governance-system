@@ -128,7 +128,7 @@ router.get('/track', async (req, res) => {
 router.get('/analytics', authenticateToken, authorizeRoles('admin'), async (req, res) => {
   try {
     const all = await Complaint.findAll({
-      attributes: ['id', 'category', 'department', 'priority', 'status', 'location', 'createdAt', 'dueDate'],
+      attributes: ['id', 'category', 'department', 'priority', 'status', 'location', 'createdAt', 'updatedAt', 'dueDate'],
       order: [['createdAt', 'DESC']],
     });
 
