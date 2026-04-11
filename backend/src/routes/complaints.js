@@ -124,6 +124,84 @@ router.get('/track', async (req, res) => {
   }
 });
 
+// GET /api/complaints/analytics — admin only
+router.get('/analytics', authenticateToken, authorizeRoles('admin'), async (req, res) => {
+  try {
+    const all = await Complaint.findAll({
+      attributes: ['id', 'category', 'department', 'priority', 'status', 'location', 'createdAt', 'dueDate'],
+      order: [['createdAt', 'DESC']],
+    });
+
+    // By category
+    const byCategory = {};
+    // By department
+    const byDepartment = {};
+    // By priority
+    const byPriority = { high: 0, medium: 0, low: 0 };
+    // By status
+    const byStatus = { pending: 0, in_progress: 0, resolved: 0 };
+    // By day (last 30 days)
+    const byDay = {};
+    // By location
+    const byLocation = {};
+    // Overdue count
+    let overdue = 0;
+    // Avg resolution time (ms)
+    let totalResolutionMs = 0, resolvedCount = 0;
+
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000);
+
+    all.forEach((c) => {
+      byCategory[c.category]   = (byCategory[c.category]   || 0) + 1;
+      byDepartment[c.department] = (byDepartment[c.department] || 0) + 1;
+      byPriority[c.priority]   = (byPriority[c.priority]   || 0) + 1;
+      byStatus[c.status]       = (byStatus[c.status]       || 0) + 1;
+
+      if (c.dueDate && c.status !== 'resolved' && new Date(c.dueDate) < now) overdue++;
+
+      if (c.status === 'resolved') {
+        resolvedCount++;
+        totalResolutionMs += new Date(c.updatedAt) - new Date(c.createdAt);
+      }
+
+      const day = new Date(c.createdAt).toISOString().slice(0, 10);
+      if (new Date(c.createdAt) >= thirtyDaysAgo)
+        byDay[day] = (byDay[day] || 0) + 1;
+
+      if (c.location) {
+        const loc = c.location.trim().toLowerCase();
+        byLocation[loc] = (byLocation[loc] || 0) + 1;
+      }
+    });
+
+    const avgResolutionHours = resolvedCount > 0
+      ? Math.round(totalResolutionMs / resolvedCount / 3600000)
+      : null;
+
+    // Top 10 locations
+    const topLocations = Object.entries(byLocation)
+      .sort((a, b) => b[1] - a[1]).slice(0, 10)
+      .map(([location, count]) => ({ location, count }));
+
+    // Daily trend sorted
+    const dailyTrend = Object.entries(byDay)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([date, count]) => ({ date, count }));
+
+    res.json({
+      total: all.length, overdue, avgResolutionHours,
+      byCategory: Object.entries(byCategory).map(([name, value]) => ({ name, value })),
+      byDepartment: Object.entries(byDepartment).sort((a,b) => b[1]-a[1]).map(([name, value]) => ({ name, value })),
+      byPriority: Object.entries(byPriority).map(([name, value]) => ({ name, value })),
+      byStatus:   Object.entries(byStatus).map(([name, value]) => ({ name, value })),
+      topLocations, dailyTrend,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/complaints/stats
 router.get('/stats', async (req, res) => {
   try {

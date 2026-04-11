@@ -24,6 +24,7 @@ export const updateStatus            = (id, status) => api.patch(`/complaints/${
 export const reassignComplaint       = (id, data)   => api.patch(`/complaints/${id}/reassign`, data);
 export const getAuditLog             = (id)         => api.get(`/complaints/${id}/audit`);
 export const getStats                = ()           => api.get('/complaints/stats');
+export const getAnalytics            = ()           => api.get('/complaints/analytics');
 export const upvoteComplaint         = (id, voterEmail) => api.post(`/complaints/${id}/upvote`, { voterEmail });
 export const getComments             = (id)         => api.get(`/complaints/${id}/comments`);
 export const postComment             = (id, data)   => api.post(`/complaints/${id}/comments`, data);

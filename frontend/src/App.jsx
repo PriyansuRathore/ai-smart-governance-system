@@ -15,6 +15,8 @@ import TrackComplaint     from './pages/TrackComplaint';
 import PublicFeed          from './pages/PublicFeed';
 import TicketPage          from './pages/TicketPage';
 import ProfilePage         from './pages/ProfilePage';
+import AnalyticsPage       from './pages/AnalyticsPage';
+import MapPage             from './pages/MapPage';
 
 export default function App() {
   return (
@@ -50,6 +52,8 @@ export default function App() {
             <Route path="/feed"         element={<PublicFeed />} />
             <Route path="/ticket/:id"   element={<TicketPage />} />
             <Route path="/profile"      element={<ProfilePage />} />
+            <Route path="/analytics"    element={<AnalyticsPage />} />
+            <Route path="/map"          element={<MapPage />} />
             <Route path="/404"          element={<NotFound />} />
             <Route path="*"      element={<NotFound />} />
           </Routes>

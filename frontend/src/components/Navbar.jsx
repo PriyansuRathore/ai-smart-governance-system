@@ -24,7 +24,9 @@ export default function Navbar() {
     { to: '/track',      label: 'Track',           always: true },
     { to: '/submit',     label: 'Submit',          roles: ['citizen', 'admin'] },
     { to: '/profile',    label: 'My Profile',      roles: ['citizen'] },
-    { to: '/admin',      label: 'Admin Dashboard', roles: ['admin'] },
+    { to: '/admin',      label: 'Admin',           roles: ['admin'] },
+    { to: '/analytics',  label: '📊 Analytics',    roles: ['admin'] },
+    { to: '/map',        label: '🗺️ Map',          roles: ['admin'] },
     { to: '/department', label: 'My Queue',        roles: ['department'] },
   ];
 
