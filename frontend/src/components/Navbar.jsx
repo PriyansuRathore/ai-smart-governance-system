@@ -23,6 +23,7 @@ export default function Navbar() {
     { to: '/feed',       label: '🌐 Public Feed',  always: true },
     { to: '/track',      label: 'Track',           always: true },
     { to: '/submit',     label: 'Submit',          roles: ['citizen', 'admin'] },
+    { to: '/profile',    label: 'My Profile',      roles: ['citizen'] },
     { to: '/admin',      label: 'Admin Dashboard', roles: ['admin'] },
     { to: '/department', label: 'My Queue',        roles: ['department'] },
   ];

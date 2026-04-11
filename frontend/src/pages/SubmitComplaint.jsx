@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { submitComplaint } from '../api';
+import { submitComplaint, forceSubmitComplaint } from '../api';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../auth.jsx';
 import axios from 'axios';
@@ -46,8 +46,9 @@ export default function SubmitComplaint() {
   const [imageUrl, setImageUrl]   = useState('');
   const [imagePrediction, setImagePrediction] = useState(null);
   const [imageAnalyzing, setImageAnalyzing]   = useState(false);
-  const [result, setResult]       = useState(null);
-  const [loading, setLoading]     = useState(false);
+  const [result,     setResult]     = useState(null);
+  const [loading,    setLoading]    = useState(false);
+  const [duplicates, setDuplicates] = useState(null);
 
   const preview   = previewCategory(form.description);
   const charCount = form.description.length;
@@ -93,8 +94,41 @@ export default function SubmitComplaint() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setDuplicates(null);
     try {
-      const { data } = await submitComplaint({
+      const payload = {
+        citizenName: form.citizenName,
+        email:       form.email,
+        description: form.description,
+        location:    form.location || undefined,
+        imageUrl:    imageUrl || undefined,
+      };
+      const { data } = await submitComplaint(payload);
+
+      // Backend found similar complaints
+      if (data.duplicate) {
+        setDuplicates(data.similar);
+        setLoading(false);
+        return;
+      }
+
+      setResult(data.complaint);
+      setForm({ citizenName: user?.name || '', email: user?.email || '', description: '', location: '' });
+      setImageUrl('');
+      setImagePrediction(null);
+      setDuplicates(null);
+      toast.success('Complaint submitted!');
+    } catch (err) {
+      toast.error(err.response?.data?.error || 'Submission failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleForceSubmit = async () => {
+    setLoading(true);
+    try {
+      const { data } = await forceSubmitComplaint({
         citizenName: form.citizenName,
         email:       form.email,
         description: form.description,
@@ -102,9 +136,10 @@ export default function SubmitComplaint() {
         imageUrl:    imageUrl || undefined,
       });
       setResult(data.complaint);
-      setForm({ citizenName: '', email: '', description: '', location: '' });
+      setForm({ citizenName: user?.name || '', email: user?.email || '', description: '', location: '' });
       setImageUrl('');
       setImagePrediction(null);
+      setDuplicates(null);
       toast.success('Complaint submitted!');
     } catch (err) {
       toast.error(err.response?.data?.error || 'Submission failed');
@@ -296,6 +331,54 @@ export default function SubmitComplaint() {
             {loading ? '⏳ Submitting...' : '🚀 Submit Complaint'}
           </button>
         </form>
+
+        {/* Duplicate warning */}
+        {duplicates && (
+          <div style={{ marginTop: '1.5rem', background: '#fffbeb', border: '1.5px solid #fcd34d', borderRadius: 16, padding: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.85rem' }}>
+              <span style={{ fontSize: '1.3rem' }}>⚠️</span>
+              <div>
+                <strong style={{ color: '#92400e', fontSize: '0.95rem' }}>Similar complaints already exist</strong>
+                <p style={{ margin: 0, fontSize: '0.82rem', color: '#b45309' }}>Consider upvoting them instead of creating a duplicate.</p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1rem' }}>
+              {duplicates.map((d) => (
+                <div key={d.id} style={{ background: '#fff', border: '1px solid #fde68a', borderRadius: 10, padding: '0.75rem 1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: '0.72rem', color: '#92400e', fontWeight: 700, marginBottom: '0.2rem' }}>#{d.id} · {d.category} · {d.status}</div>
+                    <p style={{ margin: 0, fontSize: '0.85rem', color: '#1c1917' }}>{d.description?.slice(0, 100)}{d.description?.length > 100 ? '…' : ''}</p>
+                    {d.location && <p style={{ margin: '0.2rem 0 0', fontSize: '0.75rem', color: '#78716c' }}>📍 {d.location}</p>}
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
+                    <span style={{ background: '#fef3c7', color: '#92400e', fontSize: '0.72rem', fontWeight: 700, padding: '0.15rem 0.5rem', borderRadius: 999 }}>
+                      {Math.round((d.score || 0) * 100)}% match
+                    </span>
+                    <a href={`/ticket/${d.id}`} target="_blank" rel="noreferrer"
+                      style={{ fontSize: '0.78rem', color: '#2563eb', fontWeight: 700, textDecoration: 'none', padding: '0.25rem 0.6rem', border: '1px solid #bfdbfe', borderRadius: 8 }}>
+                      View →
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setDuplicates(null)}
+                style={{ flex: 1, padding: '0.65rem', borderRadius: 10, border: '1.5px solid #d97706', background: 'transparent', color: '#d97706', fontWeight: 700, cursor: 'pointer', fontSize: '0.88rem' }}
+              >
+                ✏️ Edit my complaint
+              </button>
+              <button
+                onClick={handleForceSubmit}
+                disabled={loading}
+                style={{ flex: 1, padding: '0.65rem', borderRadius: 10, border: 'none', background: '#0f2d48', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: '0.88rem' }}
+              >
+                {loading ? '⏳ Submitting...' : '🚀 Submit anyway (different location)'}
+              </button>
+            </div>
+          </div>
+        )}
 
         {result && (
           <div className="result-card">

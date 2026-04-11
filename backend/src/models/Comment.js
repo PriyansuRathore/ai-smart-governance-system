@@ -8,6 +8,7 @@ const Comment = sequelize.define('Comment', {
   authorEmail: { type: DataTypes.STRING,  allowNull: false },
   role:        { type: DataTypes.STRING,  defaultValue: 'citizen' },
   text:        { type: DataTypes.TEXT,    allowNull: false },
+  isOfficial:  { type: DataTypes.BOOLEAN, defaultValue: false },
 }, { timestamps: true });
 
 module.exports = Comment;

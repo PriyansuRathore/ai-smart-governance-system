@@ -14,6 +14,7 @@ import NotFound           from './pages/NotFound';
 import TrackComplaint     from './pages/TrackComplaint';
 import PublicFeed          from './pages/PublicFeed';
 import TicketPage          from './pages/TicketPage';
+import ProfilePage         from './pages/ProfilePage';
 
 export default function App() {
   return (
@@ -48,6 +49,7 @@ export default function App() {
             <Route path="/track"        element={<TrackComplaint />} />
             <Route path="/feed"         element={<PublicFeed />} />
             <Route path="/ticket/:id"   element={<TicketPage />} />
+            <Route path="/profile"      element={<ProfilePage />} />
             <Route path="/404"          element={<NotFound />} />
             <Route path="*"      element={<NotFound />} />
           </Routes>

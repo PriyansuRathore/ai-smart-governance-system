@@ -152,7 +152,7 @@ export default function TicketPage() {
                 <div className="thread-empty">No comments yet. Start the discussion below.</div>
               )}
               {comments.map((c) => (
-                <div key={c.id} className={`thread-msg ${c.role === 'admin' || c.role === 'department' ? 'thread-msg--official' : ''}`}>
+                <div key={c.id} className={`thread-msg ${c.isOfficial ? 'thread-msg--official' : ''}`}>
                   <div className="thread-msg__avatar" style={{ background: ROLE_COLORS[c.role] || '#94a3b8' }}>
                     {c.authorName[0].toUpperCase()}
                   </div>
@@ -160,6 +160,11 @@ export default function TicketPage() {
                     <div className="thread-msg__header">
                       <span className="thread-author">{c.authorName}</span>
                       <span className="thread-role" style={{ background: ROLE_COLORS[c.role] || '#94a3b8' }}>{c.role}</span>
+                      {c.isOfficial && (
+                        <span style={{ fontSize: '0.68rem', background: '#0f2d48', color: '#fff', padding: '0.12rem 0.5rem', borderRadius: 999, fontWeight: 700 }}>
+                          ✓ Official Response
+                        </span>
+                      )}
                       <span className="thread-time">{new Date(c.createdAt).toLocaleString()}</span>
                     </div>
                     <p className="thread-text">{c.text}</p>

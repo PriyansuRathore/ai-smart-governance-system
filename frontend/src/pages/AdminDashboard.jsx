@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getComplaints, updateStatus } from '../api';
+import { getComplaints, updateStatus, reassignComplaint, getAuditLog } from '../api';
 import { useWebSocket } from '../useWebSocket';
 import toast from 'react-hot-toast';
 import {
@@ -46,11 +46,13 @@ function StatCard({ label, value, color, delay }) {
 
 /* ── CSV Export ── */
 function exportCSV(complaints) {
-  const headers = ['ID', 'Name', 'Email', 'Description', 'Category', 'Department', 'Priority', 'Status', 'Date'];
+  const headers = ['ID', 'Name', 'Email', 'Description', 'Category', 'Department', 'Location', 'Priority', 'Status', 'Date'];
   const rows = complaints.map((c) => [
     c.id, c.citizenName, c.email,
     `"${c.description?.replace(/"/g, '""')}"`,
-    c.category, c.department, c.priority, c.status,
+    c.category, c.department,
+    `"${(c.location || '').replace(/"/g, '""')}"`,
+    c.priority, c.status,
     new Date(c.createdAt).toLocaleDateString(),
   ]);
   const csv = [headers, ...rows].map((r) => r.join(',')).join('\n');
@@ -71,6 +73,16 @@ export default function AdminDashboard() {
   const [loading,    setLoading]    = useState(true);
   const [page,       setPage]       = useState(1);
   const [showCharts, setShowCharts] = useState(false);
+  const [auditLog,   setAuditLog]   = useState([]);
+  const [reassigning, setReassigning] = useState(false);
+
+  const DEPARTMENTS = [
+    'Public Works Department','Water Supply Department','Electricity Department',
+    'Sanitation Department','Emergency & Medical Services','Fire Department',
+    'Civil Engineering Department','Parks & Horticulture Department',
+    'Animal Control Department','Municipal Corporation','Environment Department','General Administration',
+  ];
+  const CATEGORY_LIST = ['road','water','electricity','garbage','emergency','fire','building','tree','animal','public_property','pollution','other'];
 
   const fetchData = async () => {
     setLoading(true);
@@ -100,8 +112,34 @@ export default function AdminDashboard() {
       await updateStatus(id, status);
       toast.success('Status updated');
       setComplaints((prev) => prev.map((c) => c.id === id ? { ...c, status } : c));
-      if (selected?.id === id) setSelected((p) => ({ ...p, status }));
+      if (selected?.id === id) {
+        setSelected((p) => ({ ...p, status }));
+        const { data } = await getAuditLog(id);
+        setAuditLog(data.logs);
+      }
     } catch { toast.error('Update failed'); }
+  };
+
+  const handleSelect = async (c) => {
+    setSelected(c);
+    setAuditLog([]);
+    try {
+      const { data } = await getAuditLog(c.id);
+      setAuditLog(data.logs);
+    } catch {}
+  };
+
+  const handleReassign = async (id, department, category) => {
+    setReassigning(true);
+    try {
+      const { data } = await reassignComplaint(id, { department, category });
+      toast.success('Complaint reassigned');
+      setComplaints((prev) => prev.map((c) => c.id === id ? { ...c, department: data.complaint.department, category: data.complaint.category } : c));
+      setSelected((p) => ({ ...p, department: data.complaint.department, category: data.complaint.category }));
+      const { data: al } = await getAuditLog(id);
+      setAuditLog(al.logs);
+    } catch { toast.error('Reassign failed'); }
+    finally { setReassigning(false); }
   };
 
   const filtered = complaints.filter((c) => {
@@ -111,7 +149,8 @@ export default function AdminDashboard() {
       c.citizenName?.toLowerCase().includes(q) ||
       c.email?.toLowerCase().includes(q) ||
       c.description?.toLowerCase().includes(q) ||
-      c.department?.toLowerCase().includes(q)
+      c.department?.toLowerCase().includes(q) ||
+      c.location?.toLowerCase().includes(q)
     );
   });
 
@@ -223,7 +262,7 @@ export default function AdminDashboard() {
 
       {/* Toolbar */}
       <div className="toolbar">
-        <input className="search-input" placeholder="🔍 Search by name, email, department..."
+        <input className="search-input" placeholder="🔍 Search by name, email, location, department..."
           value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} />
         <select value={filter.status} onChange={(e) => setFilter({ ...filter, status: e.target.value })}>
           <option value="">All Status</option>
@@ -254,7 +293,7 @@ export default function AdminDashboard() {
           <thead>
             <tr>
               <th>ID</th><th>Citizen</th><th>Description</th><th>Category</th>
-              <th>Department</th><th>Priority</th><th>Status</th><th>Date</th><th>Action</th>
+              <th>Department</th><th>Location</th><th>Priority</th><th>Status</th><th>Date</th><th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -264,16 +303,27 @@ export default function AdminDashboard() {
                 <tr key={c.id}
                   className={`clickable-row row-anim ${flashId === c.id ? 'row-flash' : ''}`}
                   style={{ animationDelay: `${i * 40}ms` }}
-                  onClick={() => setSelected(c)}
+                  onClick={() => handleSelect(c)}
                 >
                   <td>#{c.id}</td>
                   <td><strong>{c.citizenName}</strong><div className="complaint-meta">{c.email}</div></td>
                   <td className="complaint-text">{c.description?.length > 80 ? c.description.slice(0,80)+'…' : c.description}</td>
                   <td>{CATEGORY_ICONS[c.category]} {c.category}</td>
                   <td>{c.department}</td>
+                  <td>{c.location ? <span style={{ fontSize: '0.82rem' }}>📍 {c.location}</span> : <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>—</span>}</td>
                   <td><span className={`badge ${c.priority}`}>{c.priority}</span></td>
                   <td><span className="badge" style={{ background: STATUS_COLORS[c.status], color: '#fff' }}>{c.status}</span></td>
-                  <td>{c.createdAt ? new Date(c.createdAt).toLocaleDateString() : '-'}</td>
+                  <td>
+                    {c.createdAt ? new Date(c.createdAt).toLocaleDateString() : '-'}
+                    {c.dueDate && c.status !== 'resolved' && new Date(c.dueDate) < new Date() && (
+                      <div style={{ fontSize: '0.7rem', color: '#dc2626', fontWeight: 700, marginTop: '0.2rem' }}>⏰ Overdue</div>
+                    )}
+                    {c.dueDate && c.status !== 'resolved' && new Date(c.dueDate) >= new Date() && (
+                      <div style={{ fontSize: '0.7rem', color: '#d97706', marginTop: '0.2rem' }}>
+                        Due: {new Date(c.dueDate).toLocaleDateString()}
+                      </div>
+                    )}
+                  </td>
                   <td onClick={(e) => e.stopPropagation()}>
                     <select value={c.status} onChange={(e) => handleStatusChange(c.id, e.target.value)}>
                       <option value="pending">Pending</option>
@@ -285,7 +335,7 @@ export default function AdminDashboard() {
               ))
             }
             {!loading && filtered.length === 0 && (
-              <tr><td colSpan={9} className="empty-state">
+              <tr><td colSpan={10} className="empty-state">
                 {search ? `No results for "${search}"` : 'No complaints found.'}
               </td></tr>
             )}
@@ -330,6 +380,7 @@ export default function AdminDashboard() {
                 <div className="result-item"><span>Email</span><strong>{selected.email}</strong></div>
                 <div className="result-item"><span>Category</span><strong>{CATEGORY_ICONS[selected.category]} {selected.category}</strong></div>
                 <div className="result-item"><span>Department</span><strong>{selected.department}</strong></div>
+                <div className="result-item"><span>Location</span><strong>{selected.location || '—'}</strong></div>
                 <div className="result-item"><span>Priority</span><strong><span className={`badge ${selected.priority}`}>{selected.priority}</span></strong></div>
                 <div className="result-item"><span>Status</span>
                   <strong>
@@ -348,6 +399,61 @@ export default function AdminDashboard() {
                 <span className="field-label">Full Description</span>
                 <p>{selected.description}</p>
               </div>
+
+              {/* Reassign section */}
+              <div style={{ background: 'var(--bg)', borderRadius: 12, padding: '1rem' }}>
+                <span className="field-label" style={{ display: 'block', marginBottom: '0.6rem' }}>🔄 Reassign Complaint</span>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <select
+                    defaultValue={selected.category}
+                    id="reassign-cat"
+                    style={{ flex: 1, minWidth: 140, padding: '0.5rem', borderRadius: 8, fontSize: '0.85rem' }}
+                  >
+                    {CATEGORY_LIST.map((c) => <option key={c} value={c}>{CATEGORY_ICONS[c]} {c}</option>)}
+                  </select>
+                  <select
+                    defaultValue={selected.department}
+                    id="reassign-dept"
+                    style={{ flex: 2, minWidth: 180, padding: '0.5rem', borderRadius: 8, fontSize: '0.85rem' }}
+                  >
+                    {DEPARTMENTS.map((d) => <option key={d} value={d}>{d}</option>)}
+                  </select>
+                  <button
+                    disabled={reassigning}
+                    onClick={() => handleReassign(
+                      selected.id,
+                      document.getElementById('reassign-dept').value,
+                      document.getElementById('reassign-cat').value,
+                    )}
+                    style={{ padding: '0.5rem 1rem', borderRadius: 8, border: 'none', background: '#0f2d48', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}
+                  >
+                    {reassigning ? '...' : 'Reassign'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Audit log */}
+              {auditLog.length > 0 && (
+                <div style={{ background: 'var(--bg)', borderRadius: 12, padding: '1rem' }}>
+                  <span className="field-label" style={{ display: 'block', marginBottom: '0.6rem' }}>📜 Audit Log</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                    {auditLog.map((log) => (
+                      <div key={log.id} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                        <span style={{ whiteSpace: 'nowrap', color: 'var(--text-muted)' }}>{new Date(log.createdAt).toLocaleString()}</span>
+                        <span style={{ flex: 1 }}>
+                          <strong style={{ color: 'var(--text)' }}>{log.changedBy}</strong>
+                          <span style={{ background: log.changedByRole === 'admin' ? '#fee2e2' : '#dbeafe', color: log.changedByRole === 'admin' ? '#dc2626' : '#2563eb', padding: '0.1rem 0.4rem', borderRadius: 4, fontSize: '0.68rem', fontWeight: 700, marginLeft: '0.3rem' }}>{log.changedByRole}</span>
+                          {' '}{log.action === 'status_change' ? 'changed status' : 'reassigned'}{' '}
+                          <span style={{ textDecoration: 'line-through', color: '#94a3b8' }}>{log.fromValue}</span>
+                          {' → '}
+                          <strong style={{ color: 'var(--text)' }}>{log.toValue}</strong>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {selected.imageUrl && <img src={selected.imageUrl} alt="Complaint" className="complaint-preview" style={{ marginTop: '0.5rem' }} />}
             </div>
           </div>

@@ -6,6 +6,18 @@ const commonOptions = {
   logging: false,
   dialectOptions: {
     ssl: { require: true, rejectUnauthorized: false },
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10000,
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+    evict: 10000,
+  },
+  retry: {
+    max: 3,
   },
 };
 

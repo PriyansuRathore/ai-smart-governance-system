@@ -12,6 +12,7 @@ const authRoutes      = require('./routes/auth');
 require('./models/User');
 require('./models/Complaint');
 require('./models/Comment');
+require('./models/AuditLog');
 
 const app    = express();
 const server = http.createServer(app);
