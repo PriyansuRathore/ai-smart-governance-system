@@ -4,6 +4,9 @@ const { classifyComplaint } = require('./classifier');
 
 const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://127.0.0.1:8000';
 
+// Population density hint from env (low | medium | high | very_high)
+const DEFAULT_POPULATION = process.env.AI_DEFAULT_POPULATION || 'medium';
+
 function postJson(pathname, payload) {
   return new Promise((resolve, reject) => {
     const url  = new URL(pathname, AI_SERVICE_URL);
@@ -37,23 +40,30 @@ function postJson(pathname, payload) {
   });
 }
 
-async function predictComplaint(text) {
+async function predictComplaint(text, location = '') {
   const fallback = classifyComplaint(text);
 
   try {
     // Step 1 — ML text classification
     const textResult = await postJson('/predict-text', { text });
-    const category   = textResult.category || fallback.category;
+    const category   = textResult.category  || fallback.category;
     const department = textResult.department || fallback.department;
 
-    // Step 2 — ML priority classification using actual text + category
-    const priorityResult = await postJson('/predict-priority', { text, category });
-    const priority = priorityResult.priority || fallback.priority;
+    // Step 2 — Smart priority: text + category + location + population
+    const priorityResult = await postJson('/predict-priority', {
+      text,
+      category,
+      location:   location || '',
+      population: DEFAULT_POPULATION,
+    });
 
-    return { category, department, priority, source: 'ml' };
+    const priority  = priorityResult.priority  || fallback.priority;
+    const reasoning = priorityResult.reasoning || [];
+    const signals   = priorityResult.signals   || {};
+
+    return { category, department, priority, reasoning, signals, source: 'ml' };
   } catch {
-    // AI service not running — fall back to keyword classifier
-    return { ...fallback, source: 'keyword-fallback' };
+    return { ...fallback, reasoning: [], signals: {}, source: 'keyword-fallback' };
   }
 }
 

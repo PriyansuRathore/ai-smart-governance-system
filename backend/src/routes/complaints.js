@@ -52,7 +52,7 @@ router.post('/', validateComplaint, async (req, res) => {
     }
 
     // ── Create complaint ─────────────────────────────────
-    const { category, department, priority, source } = await predictComplaint(description);
+    const { category, department, priority, reasoning, signals, source } = await predictComplaint(description, location || '');
     const complaint = await Complaint.create({
       citizenName, email, description,
       imageUrl: imageUrl || null,
@@ -62,7 +62,7 @@ router.post('/', validateComplaint, async (req, res) => {
 
     req.app.locals.broadcast({ type: 'NEW_COMPLAINT', complaint });
     sendStatusEmail(complaint);
-    res.status(201).json({ message: 'Complaint submitted successfully', complaint, aiSource: source });
+    res.status(201).json({ message: 'Complaint submitted successfully', complaint, aiSource: source, reasoning, signals });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -72,7 +72,7 @@ router.post('/', validateComplaint, async (req, res) => {
 router.post('/force', validateComplaint, async (req, res) => {
   try {
     const { citizenName, email, description, imageUrl, location } = req.body;
-    const { category, department, priority, source } = await predictComplaint(description);
+    const { category, department, priority, source } = await predictComplaint(description, location || '');
     const complaint = await Complaint.create({
       citizenName, email, description,
       imageUrl: imageUrl || null,

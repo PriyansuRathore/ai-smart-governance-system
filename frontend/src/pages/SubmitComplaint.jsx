@@ -49,6 +49,7 @@ export default function SubmitComplaint() {
   const [result,     setResult]     = useState(null);
   const [loading,    setLoading]    = useState(false);
   const [duplicates, setDuplicates] = useState(null);
+  const [reasoning,  setReasoning]  = useState([]);
 
   const preview   = previewCategory(form.description);
   const charCount = form.description.length;
@@ -113,6 +114,7 @@ export default function SubmitComplaint() {
       }
 
       setResult(data.complaint);
+      setReasoning(data.reasoning || []);
       setForm({ citizenName: user?.name || '', email: user?.email || '', description: '', location: '' });
       setImageUrl('');
       setImagePrediction(null);
@@ -136,6 +138,7 @@ export default function SubmitComplaint() {
         imageUrl:    imageUrl || undefined,
       });
       setResult(data.complaint);
+      setReasoning(data.reasoning || []);
       setForm({ citizenName: user?.name || '', email: user?.email || '', description: '', location: '' });
       setImageUrl('');
       setImagePrediction(null);
@@ -391,6 +394,21 @@ export default function SubmitComplaint() {
               <div className="result-item"><span>Status</span><strong><span className={`badge ${result.status}`}>{result.status}</span></strong></div>
               <div className="result-item"><span>Next Step</span><strong>Queued for government review</strong></div>
             </div>
+
+            {/* AI Priority Reasoning */}
+            {reasoning.length > 0 && (
+              <div style={{ background: 'var(--bg)', borderRadius: 12, padding: '0.85rem 1rem', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.5rem' }}>
+                  🤖 Why {result.priority} priority?
+                </div>
+                <ul style={{ margin: 0, padding: '0 0 0 1.1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  {reasoning.map((r, i) => (
+                    <li key={i} style={{ fontSize: '0.85rem', color: 'var(--text)', lineHeight: 1.5 }}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {result.imageUrl && <img src={result.imageUrl} alt="Submitted" className="complaint-preview" style={{ marginTop: '0.5rem' }} />}
           </div>
         )}
