@@ -52,7 +52,6 @@ def train_text_classifier() -> None:
             C=8.0,
             class_weight="balanced",
             solver="lbfgs",
-            multi_class="multinomial",
         )),
     ])
 
