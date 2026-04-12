@@ -21,6 +21,7 @@ function useCountUp(target, duration = 800) {
     const start = prev.current, end = target ?? 0;
     prev.current = end;
     if (start === end) return;
+    if (end === 0) { setCount(0); return; }
     const steps = 30, step = (end - start) / steps;
     let cur = start, i = 0;
     const id = setInterval(() => {
@@ -88,9 +89,12 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const c = await getComplaints({});
-      setComplaints(Array.isArray(c.data) ? c.data : []);
-    } catch { toast.error('Failed to load data'); }
-    finally { setLoading(false); }
+      const arr = Array.isArray(c.data) ? c.data : [];
+      setComplaints(arr);
+    } catch (err) {
+      console.error('fetchData error:', err.response?.status, err.response?.data || err.message);
+      toast.error('Failed to load data');
+    } finally { setLoading(false); }
   };
 
   useEffect(() => { fetchData(); setPage(1); }, [filter.status, filter.category]);

@@ -10,7 +10,14 @@ api.interceptors.request.use((config) => {
 
 // Normalize response — backend returns { complaints, total } or flat array
 const normalize = (res) => {
-  const data = Array.isArray(res.data) ? res.data : (res.data.complaints ?? []);
+  let data;
+  if (Array.isArray(res.data)) {
+    data = res.data;
+  } else if (Array.isArray(res.data?.complaints)) {
+    data = res.data.complaints;
+  } else {
+    data = [];
+  }
   return { ...res, data };
 };
 
