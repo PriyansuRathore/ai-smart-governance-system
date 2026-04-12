@@ -69,6 +69,7 @@ export default function MapPage() {
   const [geocoding, setGeocoding] = useState(false);
   const [filter,   setFilter]   = useState('all');
   const [progress, setProgress] = useState(0);
+  const [selectedComplaintId, setSelectedComplaintId] = useState('');
 
   useEffect(() => {
     getComplaints({})
@@ -95,6 +96,25 @@ export default function MapPage() {
 
   const filtered = filter === 'all' ? markers : markers.filter((m) => m.category === filter);
   const categories = [...new Set(markers.map((m) => m.category))];
+  const selectedMarker = filtered.find((m) => String(m.id) === selectedComplaintId) || null;
+
+  useEffect(() => {
+    if (selectedComplaintId && !selectedMarker) {
+      setSelectedComplaintId('');
+    }
+  }, [selectedComplaintId, selectedMarker]);
+
+  function FocusMarker({ marker }) {
+    const map = useMap();
+
+    useEffect(() => {
+      if (marker?.coords) {
+        map.setView(marker.coords, 14, { animate: true });
+      }
+    }, [map, marker]);
+
+    return null;
+  }
 
   return (
     <div className="page">
@@ -145,6 +165,38 @@ export default function MapPage() {
         ))}
       </div>
 
+      {filtered.length > 0 && (
+        <div className="card" style={{ marginBottom: '1rem', padding: '1rem 1.25rem' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ minWidth: 220, flex: 1 }}>
+              <label className="field-label" htmlFor="complaint-selector" style={{ display: 'block', marginBottom: '0.45rem' }}>
+                Focus on a complaint
+              </label>
+              <select
+                id="complaint-selector"
+                value={selectedComplaintId}
+                onChange={(e) => setSelectedComplaintId(e.target.value)}
+              >
+                <option value="">Show all mapped complaints</option>
+                {filtered.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    #{c.id} - {c.category} - {c.location}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {selectedMarker && (
+              <button
+                className="btn-outline btn-sm"
+                onClick={() => navigate(`/ticket/${selectedMarker.id}`)}
+              >
+                Open selected ticket
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
       {loading ? (
         <div className="map-placeholder">Loading complaints...</div>
       ) : markers.length === 0 && !geocoding ? (
@@ -173,7 +225,10 @@ export default function MapPage() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             />
-            {filtered.length > 0 && <FitBounds markers={filtered} />}
+            {selectedMarker
+              ? <FocusMarker marker={selectedMarker} />
+              : filtered.length > 0 && <FitBounds markers={filtered} />
+            }
             {filtered.map((c) => (
               <Marker key={c.id} position={c.coords} icon={createIcon(CATEGORY_COLORS[c.category] || '#94a3b8')}>
                 <Popup maxWidth={280}>
