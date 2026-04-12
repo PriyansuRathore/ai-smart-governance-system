@@ -1,10 +1,16 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
-const apiBaseUrl     = 'http://localhost:5000';
-const authApiBaseUrl = 'http://localhost:5000';
+function getAuthBaseUrl() {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  if (apiUrl) {
+    return apiUrl.replace(/\/api\/?$/, '');
+  }
 
-const authClient = axios.create({ baseURL: authApiBaseUrl });
+  return 'http://localhost:5000';
+}
+
+const authClient = axios.create({ baseURL: getAuthBaseUrl() });
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {

@@ -36,7 +36,7 @@ export default function TrackComplaint() {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.get('http://localhost:5000/api/complaints/track', {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/complaints/track`, {
         params: { email: email.trim() },
       });
       setComplaints(data.complaints);

@@ -20,7 +20,7 @@ const CATEGORIES = {
 };
 
 const MAX_SIZE = 5 * 1024 * 1024;
-const AI_SERVICE = 'http://localhost:8000';
+const AI_SERVICE = import.meta.env.VITE_AI_SERVICE_URL || 'http://localhost:8000';
 
 function previewCategory(text) {
   const lower = text.toLowerCase();

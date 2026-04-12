@@ -52,7 +52,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!isAuthenticated) { navigate('/login'); return; }
-    axios.get('http://localhost:5000/api/complaints/track', { params: { email: user.email } })
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/complaints/track`, { params: { email: user.email } })
       .then(({ data }) => setComplaints(data.complaints))
       .catch(() => toast.error('Failed to load complaints'))
       .finally(() => setLoading(false));
