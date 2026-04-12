@@ -4,6 +4,28 @@ A full-stack production-ready citizen complaint management system with ML-powere
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home Page](screenshots/home.png)
+
+### 📝 Submit Complaint
+![Submit Complaint](screenshots/submit.png)
+
+### 📊 Admin Dashboard
+![Admin Dashboard](screenshots/admin.png)
+
+### 🎫 Ticket Page
+![Ticket Page](screenshots/ticket.png)
+
+### 🌐 Public Feed
+![Public Feed](screenshots/feed.png)
+
+### 📈 Analytics Dashboard
+![Analytics](screenshots/analytics.png)
+
+---
+
 ## ✨ Features
 
 ### 🤖 AI & Classification
