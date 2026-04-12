@@ -23,6 +23,7 @@ const normalize = (res) => {
 
 export const submitComplaint         = (data)       => api.post('/complaints', data);
 export const forceSubmitComplaint    = (data)       => api.post('/complaints/force', data);
+export const predictImage           = (data)       => api.post('/predict/image', data);
 export const getComplaints           = (params)     => api.get('/complaints', { params }).then(normalize);
 export const getComplaint            = (id)         => api.get(`/complaints/${id}`);
 export const getPublicComplaints     = (params)     => api.get('/complaints/public', { params });

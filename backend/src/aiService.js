@@ -67,4 +67,9 @@ async function predictComplaint(text, location = '') {
   }
 }
 
-module.exports = { predictComplaint };
+async function predictImage(image, filename = '', description = '') {
+  const payload = { image, filename, description };
+  return postJson('/predict-image', payload);
+}
+
+module.exports = { predictComplaint, predictImage };

@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { submitComplaint, forceSubmitComplaint } from '../api';
+import { submitComplaint, forceSubmitComplaint, predictImage } from '../api';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../auth.jsx';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const CATEGORIES = {
@@ -20,7 +19,6 @@ const CATEGORIES = {
 };
 
 const MAX_SIZE = 5 * 1024 * 1024;
-const AI_SERVICE = import.meta.env.VITE_AI_SERVICE_URL || 'http://localhost:8000';
 
 function previewCategory(text) {
   const lower = text.toLowerCase();
@@ -58,7 +56,7 @@ export default function SubmitComplaint() {
     setImagePrediction(null);
     setImageAnalyzing(true);
     try {
-      const { data } = await axios.post(`${AI_SERVICE}/predict-image`, {
+      const { data } = await predictImage({
         image: b64, filename, description,
       });
       setImagePrediction(data);

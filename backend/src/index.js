@@ -9,6 +9,7 @@ require('dotenv').config();
 const sequelize       = require('./database');
 const complaintRoutes = require('./routes/complaints');
 const authRoutes      = require('./routes/auth');
+const predictRoutes   = require('./routes/predict');
 require('./models/User');
 require('./models/Complaint');
 require('./models/Comment');
@@ -22,10 +23,19 @@ const wss    = new WebSocketServer({ server });
 app.use(helmet());
 
 // ── CORS — only allow frontend origin
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(',');
+const DEFAULT_ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'https://ai-smart-governance-system.vercel.app',
+];
+
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : DEFAULT_ALLOWED_ORIGINS
+).map((origin) => origin.trim().replace(/\/$/, ''));
 app.use(cors({
   origin: (origin, cb) => {
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+    const normalizedOrigin = origin?.replace(/\/$/, '');
+    if (!normalizedOrigin || ALLOWED_ORIGINS.includes(normalizedOrigin)) return cb(null, true);
     cb(new Error('Not allowed by CORS'));
   },
   credentials: true,
@@ -63,6 +73,7 @@ app.locals.broadcast = (data) => {
 
 // ── Routes
 app.use('/auth',           authLimiter,      authRoutes);
+app.use('/api/predict',    complaintLimiter, predictRoutes);
 app.use('/api/complaints', complaintLimiter, complaintRoutes);
 app.get('/health', (_, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
